@@ -17,7 +17,7 @@ class TodoListViewController: UITableViewController {
         // Do any additional setup after loading the view.
         
         if let item = defaults.array(forKey: "TodoListArray") as? [String] {
-            itemArray = item 
+            itemArray = item
         }
         
         configureNavigationBar()
