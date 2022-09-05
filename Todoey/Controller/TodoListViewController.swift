@@ -10,19 +10,12 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = ItemList.allValues
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-//        if let item = defaults.array(forKey: "TodoListArray") as? [Item] {
-//                        
-//            itemArray = item
-//        }
         
         configureNavigationBar()
-        
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -39,9 +32,7 @@ class TodoListViewController: UITableViewController {
             
             self.itemArray.append(newItem)
             
-            self.defaults.set(self.itemArray, forKey: "TodoListArray")
-            
-            self.tableView.reloadData()
+            self.saveItems()
         }
         
         alert.addTextField { alertTextField in
@@ -53,6 +44,21 @@ class TodoListViewController: UITableViewController {
         
         present(alert, animated: true)
         
+    }
+    
+    //MARK: - Model Manipulation Methods
+    
+    func saveItems() {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding data: \(error)")
+        }
+        
+        tableView.reloadData()
     }
     
     private func configureNavigationBar() {
@@ -93,11 +99,7 @@ extension TodoListViewController {
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
+        saveItems()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
