@@ -15,6 +15,8 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadItems()
+        
         configureNavigationBar()
     }
     
@@ -59,6 +61,18 @@ class TodoListViewController: UITableViewController {
         }
         
         tableView.reloadData()
+    }
+    
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("Error retrieving data from property list - \(error)")
+            }
+        }
     }
     
     private func configureNavigationBar() {
