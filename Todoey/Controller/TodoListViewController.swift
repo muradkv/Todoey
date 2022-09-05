@@ -9,16 +9,17 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    var itemArray = ["Food", "Mood", "Good"]
+    var itemArray = ItemList.allValues
     let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        if let item = defaults.array(forKey: "TodoListArray") as? [String] {
-            itemArray = item
-        }
+//        if let item = defaults.array(forKey: "TodoListArray") as? [Item] {
+//                        
+//            itemArray = item
+//        }
         
         configureNavigationBar()
         
@@ -33,7 +34,10 @@ class TodoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             //What happen when the user clicks the Add Item on our UIAlert
 
-            self.itemArray.append(textField.text!)
+            let newItem = Item()
+            newItem.title = textField.text!
+            
+            self.itemArray.append(newItem)
             
             self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
@@ -76,7 +80,7 @@ extension TodoListViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell") else { return UITableViewCell() }
         
-        cell.textLabel?.text = itemArray[indexPath.row]
+        cell.textLabel?.text = itemArray[indexPath.row].title
         
         return cell
     }
