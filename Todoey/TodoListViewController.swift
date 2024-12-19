@@ -23,6 +23,7 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureNavBar()
         setDelegates()
     }
     
@@ -33,8 +34,12 @@ class TodoListViewController: UIViewController {
         todoListView.setTableViewDataSource(self)
     }
 
-
+    private func configureNavBar() {
+        navigationItem.title = "Todoey"
+    }
 }
+
+//MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
