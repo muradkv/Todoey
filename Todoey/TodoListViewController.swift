@@ -31,7 +31,7 @@ class TodoListViewController: UIViewController {
     
     private func setDelegates() {
         todoListView.setTableViewDataSource(self)
-        todoListView.setTableViewDataSource(self)
+        todoListView.setTableViewDelegate(self)
     }
 
     private func configureNavBar() {
@@ -51,5 +51,15 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = itemArray[indexPath.row]
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if tableView.cellForRow(at: indexPath)?.accessoryType == UITableViewCell.AccessoryType.none {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        } else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
     }
 }
