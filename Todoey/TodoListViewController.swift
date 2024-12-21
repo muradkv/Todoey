@@ -12,19 +12,20 @@ class TodoListViewController: UIViewController {
     //MARK: - Properties
     
     let todoListView = TodoListView()
-    let itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
     
     //MARK: - Life cycle
     
     override func loadView() {
         view = todoListView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureNavBar()
         setDelegates()
+        setupAddButton()
     }
     
     //MARK: - Methods
@@ -33,9 +34,33 @@ class TodoListViewController: UIViewController {
         todoListView.setTableViewDataSource(self)
         todoListView.setTableViewDelegate(self)
     }
-
+    
     private func configureNavBar() {
         navigationItem.title = "Todoey"
+    }
+    
+    private func setupAddButton() {
+        let plusImage = UIImage(systemName: "plus")?.withTintColor(.white, renderingMode: .alwaysOriginal).withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: plusImage, style: .plain, target: self, action: #selector(addButtonTapped))
+    }
+    
+    @objc private func addButtonTapped() {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+        }
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { action in
+            self.itemArray.append(textField.text!)
+            self.todoListView.reloadTableView()
+        }
+        
+        alert.addAction(action)
+        present(alert, animated: true)
     }
 }
 

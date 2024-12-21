@@ -26,7 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .blue
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white,
+                                          .font: UIFont.systemFont(ofSize: 25, weight: .medium)]
 
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance

@@ -51,4 +51,8 @@ class TodoListView: UIView {
     func setTableViewDataSource(_ dataSource: UITableViewDataSource) {
         tableView.dataSource = dataSource
     }
+    
+    func reloadTableView() {
+        tableView.reloadData()
+    }
 }
