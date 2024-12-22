@@ -13,6 +13,7 @@ class TodoListViewController: UIViewController {
     
     let todoListView = TodoListView()
     var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    let defaults = UserDefaults()
     
     //MARK: - Life cycle
     
@@ -26,6 +27,10 @@ class TodoListViewController: UIViewController {
         configureNavBar()
         setDelegates()
         setupAddButton()
+        
+        if let item = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = item 
+        }
     }
     
     //MARK: - Methods
@@ -56,6 +61,9 @@ class TodoListViewController: UIViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
+            
             self.todoListView.reloadTableView()
         }
         
