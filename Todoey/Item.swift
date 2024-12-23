@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Item {
+struct Item: Encodable, Decodable {
     var title: String
     var done: Bool
 }
