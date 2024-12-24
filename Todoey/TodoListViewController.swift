@@ -29,7 +29,7 @@ class TodoListViewController: UIViewController {
         setDelegates()
         setupAddButton()
                 
-        //loadItems()
+        loadItems()
     }
     
     //MARK: - Methods
@@ -82,15 +82,14 @@ class TodoListViewController: UIViewController {
         }
     }
     
-//    private func loadItems() {
-//        do {
-//            let data = try Data(contentsOf: dataFile!)
-//            let decoder = PropertyListDecoder()
-//            itemArray = try decoder.decode([Item].self, from: data)
-//        } catch {
-//            print("Error decoding item array, \(error)")
-//        }
-//    }
+    private func loadItems() {
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
+        }
+    }
 }
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
@@ -120,5 +119,15 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         saveItems()
         
         todoListView.reloadTableView()
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let item = itemArray[indexPath.row]
+            context.delete(item)
+            itemArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            saveItems()
+        }
     }
 }
