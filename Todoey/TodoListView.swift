@@ -11,6 +11,19 @@ class TodoListView: UIView {
     
     //MARK: - Properties
     
+    private let searchBar: UISearchBar = {
+        let searchB = UISearchBar()
+        searchB.translatesAutoresizingMaskIntoConstraints = false
+        searchB.placeholder = "Search..."
+        searchB.backgroundColor = .white
+        searchB.autocorrectionType = .no
+        searchB.returnKeyType = .search
+        searchB.autocapitalizationType = .sentences
+        searchB.autocorrectionType = .no
+        searchB.spellCheckingType = .no
+        return searchB
+    }()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,10 +45,15 @@ class TodoListView: UIView {
     //MARK: - Setup UI
     
     private func setupView() {
+        addSubview(searchBar)
         addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -50,6 +68,10 @@ class TodoListView: UIView {
     
     func setTableViewDataSource(_ dataSource: UITableViewDataSource) {
         tableView.dataSource = dataSource
+    }
+    
+    func setSearchBarDelegate(_ delegate: UISearchBarDelegate) {
+        searchBar.delegate = delegate
     }
     
     func reloadTableView() {

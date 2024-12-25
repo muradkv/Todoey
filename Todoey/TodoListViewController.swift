@@ -37,6 +37,7 @@ class TodoListViewController: UIViewController {
     private func setDelegates() {
         todoListView.setTableViewDataSource(self)
         todoListView.setTableViewDelegate(self)
+        todoListView.setSearchBarDelegate(self)
     }
     
     private func configureNavBar() {
@@ -90,6 +91,12 @@ class TodoListViewController: UIViewController {
             print("Error fetching data from context \(error)")
         }
     }
+}
+
+//MARK: - UISearchBarDelegate
+
+extension TodoListViewController: UISearchBarDelegate {
+    
 }
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
