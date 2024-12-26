@@ -28,7 +28,7 @@ class TodoListViewController: UIViewController {
         configureNavBar()
         setDelegates()
         setupAddButton()
-                
+        
         loadItems()
     }
     
@@ -60,13 +60,13 @@ class TodoListViewController: UIViewController {
         }
         
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
-                        
+            
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
             
             self.itemArray.append(newItem)
-                                
+            
             self.saveItems()
             self.todoListView.reloadTableView()
         }
@@ -74,6 +74,8 @@ class TodoListViewController: UIViewController {
         alert.addAction(action)
         present(alert, animated: true)
     }
+    
+    //MARK: - Methods CoreData
     
     private func saveItems() {
         do {
@@ -83,8 +85,7 @@ class TodoListViewController: UIViewController {
         }
     }
     
-    private func loadItems() {
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+    private func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
         do {
             itemArray = try context.fetch(request)
         } catch {
@@ -96,6 +97,33 @@ class TodoListViewController: UIViewController {
 //MARK: - UISearchBarDelegate
 
 extension TodoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else {
+            print("Search text is empty")
+            return
+        }
+        
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        loadItems(with: request)
+        
+        todoListView.reloadTableView()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            todoListView.reloadTableView()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
+    
     
 }
 
