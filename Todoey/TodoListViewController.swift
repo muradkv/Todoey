@@ -16,6 +16,12 @@ class TodoListViewController: UIViewController {
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    var selectedCategory: Category? {
+        didSet {
+            loadItems()
+        }
+    }
+    
     //MARK: - Life cycle
     
     override func loadView() {
@@ -28,8 +34,6 @@ class TodoListViewController: UIViewController {
         configureNavBar()
         setDelegates()
         setupAddButton()
-        
-        loadItems()
     }
     
     //MARK: - Methods
@@ -41,7 +45,7 @@ class TodoListViewController: UIViewController {
     }
     
     private func configureNavBar() {
-        navigationItem.title = "Todoey"
+        navigationItem.title = "Item"
     }
     
     private func setupAddButton() {
@@ -123,7 +127,6 @@ extension TodoListViewController: UISearchBarDelegate {
             }
         }
     }
-    
     
 }
 

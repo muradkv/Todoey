@@ -18,18 +18,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        //window?.rootViewController = UINavigationController(rootViewController: TodoListViewController())
         window?.rootViewController = UINavigationController(rootViewController: CategoryViewController())
         window?.makeKeyAndVisible()
     }
     
     private func configureNavBar() {
+        
+        let titleTextAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 25, weight: .medium)
+        ]
+        
+        let backButtonAttributes: [NSAttributedString.Key : Any] = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.systemFont(ofSize: 20, weight: .medium)
+        ]
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .blue
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.white,
-                                          .font: UIFont.systemFont(ofSize: 25, weight: .medium)]
-
+        appearance.titleTextAttributes = titleTextAttributes
+        appearance.backButtonAppearance.normal.titleTextAttributes = backButtonAttributes
+        
+        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
