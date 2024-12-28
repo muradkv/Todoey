@@ -6,15 +6,15 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UIViewController {
     
     //MARK: - Properties
     
     let categoryView = CategoryView()
-    var categories = [Category]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let realm = try! Realm()
+    var categories: Results<CategoryRealm>?
     
     //MARK: - Life cycle
     
@@ -59,12 +59,10 @@ class CategoryViewController: UIViewController {
         
         let action = UIAlertAction(title: "Add Category", style: .default) { action in
             
-            let newCategory = Category(context: self.context)
+            let newCategory = CategoryRealm()
             newCategory.name = textField.text!
-            
-            self.categories.append(newCategory)
-            
-            self.saveCategories()
+                        
+            self.save(category: newCategory)
             self.categoryView.reloadTableView()
         }
         
@@ -74,20 +72,18 @@ class CategoryViewController: UIViewController {
     
     //MARK: - Methods CoreData
     
-    private func saveCategories() {
+    private func save(category: CategoryRealm) {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
             print("Error encoding item array, \(error)")
         }
     }
     
-    private func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
-        do {
-            categories = try context.fetch(request)
-        } catch {
-            print("Error fetching data from context \(error)")
-        }
+    private func loadCategories() {
+        categories = realm.objects(CategoryRealm.self)
     }
 }
 
@@ -96,14 +92,14 @@ class CategoryViewController: UIViewController {
 extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return categories?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let item = categories[indexPath.row]
-        cell.textLabel?.text = item.name
+        let item = categories?[indexPath.row]
+        cell.textLabel?.text = item?.name ?? "No categories added"
         
         return cell
     }
@@ -112,7 +108,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         let todoListVC = TodoListViewController()
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            todoListVC.selectedCategory = categories[indexPath.row]
+            todoListVC.selectedCategory = categories?[indexPath.row]
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

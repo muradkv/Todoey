@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class TodoListViewController: UIViewController {
     
@@ -16,7 +17,7 @@ class TodoListViewController: UIViewController {
     var itemArray = [Item]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    var selectedCategory: Category? {
+    var selectedCategory: CategoryRealm? {
         didSet {
             loadItems()
         }
@@ -65,15 +66,15 @@ class TodoListViewController: UIViewController {
         
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             
-            let newItem = Item(context: self.context)
-            newItem.title = textField.text!
-            newItem.done = false
-            newItem.parentCategory = self.selectedCategory
-            
-            self.itemArray.append(newItem)
-            
-            self.saveItems()
-            self.todoListView.reloadTableView()
+//            let newItem = Item(context: self.context)
+//            newItem.title = textField.text!
+//            newItem.done = false
+//            newItem.parentCategory = self.selectedCategory
+//            
+//            self.itemArray.append(newItem)
+//            
+//            self.saveItems()
+//            self.todoListView.reloadTableView()
         }
         
         alert.addAction(action)
