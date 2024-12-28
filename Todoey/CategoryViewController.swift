@@ -109,13 +109,13 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-            
         let todoListVC = TodoListViewController()
         
         if let indexPath = tableView.indexPathForSelectedRow {
             todoListVC.selectedCategory = categories[indexPath.row]
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         
         navigationController?.pushViewController(todoListVC, animated: true)
     }
