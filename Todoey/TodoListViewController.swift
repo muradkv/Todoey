@@ -68,7 +68,7 @@ class TodoListViewController: UIViewController {
             
             let newItem = ItemRealm()
             newItem.title = textField.text!
-            
+            newItem.date = Date()
             self.save(item: newItem)
             self.todoListView.reloadTableView()
         }
@@ -118,12 +118,7 @@ extension TodoListViewController: UISearchBarDelegate {
             return
         }
         
-//        let request: NSFetchRequest<Item> = Item.fetchRequest()
-//        
-//        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-//        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-//        
-        loadItems()
+        toDoItems = toDoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "date", ascending: true)
         
         todoListView.reloadTableView()
     }
