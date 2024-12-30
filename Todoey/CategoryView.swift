@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwipeCellKit
 
 class CategoryView: UIView {
     //MARK: - Properties
@@ -13,7 +14,8 @@ class CategoryView: UIView {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CategoryCell")
+        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: "SwipeCell")
+        tableView.rowHeight = 80
         return tableView
     }()
     
