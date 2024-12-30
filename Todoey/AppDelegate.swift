@@ -57,21 +57,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK: - Realm
     
     private func configureRealm() {
-        do {
-            let _ = try Realm()
-        } catch {
-            print("Error initialising new realm, \(error)")
-        }
+        
         
         let config = Realm.Configuration(
-            schemaVersion: 2,
+            schemaVersion: 4,
             migrationBlock: { migration, oldSchemaVersion in
-                if oldSchemaVersion < 2 {
+                if oldSchemaVersion < 4 {
                     // Автоматическая миграция для нового свойства `date`
                 }
             }
         )
         Realm.Configuration.defaultConfiguration = config
+        
+        do {
+            let _ = try Realm()
+        } catch {
+            print("Error initialising new realm, \(error)")
+        }
     }
 
 }

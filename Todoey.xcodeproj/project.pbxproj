@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA663D6C2D224AC0008E1128 /* ChameleonSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA663D6B2D224AC0008E1128 /* ChameleonSwift */; };
 		FA7FFE242D21A523004FEA85 /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = FA7FFE232D21A523004FEA85 /* SwipeCellKit */; };
 		FA8EBBAB2D1FA01D008D6B51 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FA8EBBAA2D1FA01D008D6B51 /* RealmSwift */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 			files = (
 				FA7FFE242D21A523004FEA85 /* SwipeCellKit in Frameworks */,
 				FA8EBBAB2D1FA01D008D6B51 /* RealmSwift in Frameworks */,
+				FA663D6C2D224AC0008E1128 /* ChameleonSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,7 @@
 			packageProductDependencies = (
 				FA8EBBAA2D1FA01D008D6B51 /* RealmSwift */,
 				FA7FFE232D21A523004FEA85 /* SwipeCellKit */,
+				FA663D6B2D224AC0008E1128 /* ChameleonSwift */,
 			);
 			productName = Todoey;
 			productReference = FAC2C2D92D13C63200297998 /* Todoey.app */;
@@ -119,6 +122,7 @@
 			packageReferences = (
 				FA8EBBA92D1FA01D008D6B51 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				FA7FFE222D21A523004FEA85 /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
+				FA663D6A2D224AC0008E1128 /* XCRemoteSwiftPackageReference "Chameleon" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = FAC2C2DA2D13C63200297998 /* Products */;
@@ -354,6 +358,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FA663D6A2D224AC0008E1128 /* XCRemoteSwiftPackageReference "Chameleon" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dwsdolce/Chameleon";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
 		FA7FFE222D21A523004FEA85 /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
@@ -373,6 +385,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FA663D6B2D224AC0008E1128 /* ChameleonSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA663D6A2D224AC0008E1128 /* XCRemoteSwiftPackageReference "Chameleon" */;
+			productName = ChameleonSwift;
+		};
 		FA7FFE232D21A523004FEA85 /* SwipeCellKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FA7FFE222D21A523004FEA85 /* XCRemoteSwiftPackageReference "SwipeCellKit" */;

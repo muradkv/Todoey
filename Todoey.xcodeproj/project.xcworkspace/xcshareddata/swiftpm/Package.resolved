@@ -1,6 +1,15 @@
 {
-  "originHash" : "2a0d55dba3700d18b7251cb009e55a70ba9e0b68abe8850cce0cdc30f0b353da",
+  "originHash" : "1620b26bc4a39e03747cb603b025219b91e0bbf9cdf491a5401234bc610e0264",
   "pins" : [
+    {
+      "identity" : "chameleon",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dwsdolce/Chameleon",
+      "state" : {
+        "revision" : "916fb01bec2b8c7b7a274ba16be4341ee73b74f8",
+        "version" : "2.2.1"
+      }
+    },
     {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",

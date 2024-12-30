@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonSwift
 
 class CategoryViewController: SwipeTableViewController {
     
@@ -61,6 +62,7 @@ class CategoryViewController: SwipeTableViewController {
             
             let newCategory = CategoryRealm()
             newCategory.name = textField.text!
+            newCategory.colorRow = UIColor.randomFlat().hexValue()
                         
             self.save(category: newCategory)
             self.categoryView.reloadTableView()
@@ -112,6 +114,22 @@ extension CategoryViewController {
         
         let item = categories?[indexPath.row]
         cell.textLabel?.text = item?.name ?? "No categories added"
+        
+        //Проверяем есть ли цвет в старой базе, если нет присваиваем рандом и сохраняем в базу
+        if let color = item?.colorRow, !color.isEmpty {
+            cell.backgroundColor = UIColor(hexString: color)
+        } else {
+            let hexColor = UIColor.randomFlat()
+            cell.backgroundColor = UIColor.randomFlat()
+            
+            do {
+                try realm.write {
+                    item?.colorRow = hexColor.hexValue()
+                }
+            } catch {
+                print("Error saving color to Realm: \(error)")
+            }
+        }
         
         return cell
     }
