@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class TodoListViewController: UIViewController {
+class TodoListViewController: SwipeTableViewController {
     
     //MARK: - Properties
     
@@ -107,6 +107,11 @@ class TodoListViewController: UIViewController {
             print("Cant delete item from Realm - \(error)")
         }
     }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        guard let item = toDoItems?[indexPath.row] else { return }
+        delete(item: item)
+    }
 }
 
 //MARK: - UISearchBarDelegate
@@ -138,13 +143,13 @@ extension TodoListViewController: UISearchBarDelegate {
 
 //MARK: - UITableViewDelegate, UITableViewDataSource
 
-extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension TodoListViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         toDoItems?.count ?? 1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell", for: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = toDoItems?[indexPath.row] {
             cell.textLabel?.text = item.title
@@ -156,7 +161,7 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let item = toDoItems?[indexPath.row] {
             do {
                 try realm.write {
@@ -169,15 +174,5 @@ extension TodoListViewController: UITableViewDelegate, UITableViewDataSource {
         
         todoListView.reloadTableView()
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        guard let item = toDoItems?[indexPath.row] else { return }
-        
-        if editingStyle == .delete {
-            delete(item: item)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwipeCellKit
 
 class TodoListView: UIView {
     
@@ -27,7 +28,8 @@ class TodoListView: UIView {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "defaultCell")
+        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: "SwipeCell")
+        tableView.rowHeight = 80
         return tableView
     }()
     
