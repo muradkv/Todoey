@@ -117,7 +117,7 @@ class TodoListViewController: SwipeTableViewController {
         present(alert, animated: true)
     }
     
-    //MARK: - Methods CoreData
+    //MARK: - Methods Realm
     
     private func save(item: ItemRealm) {
         if let currentCategory = selectedCategory {

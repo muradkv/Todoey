@@ -72,7 +72,7 @@ class CategoryViewController: SwipeTableViewController {
         present(alert, animated: true)
     }
     
-    //MARK: - Methods CoreData
+    //MARK: - Methods Realm
     
     private func save(category: CategoryRealm) {
         do {
