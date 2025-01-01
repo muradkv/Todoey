@@ -146,7 +146,8 @@ class TodoListViewController: SwipeTableViewController {
     }
     
     override func updateModel(at indexPath: IndexPath) {
-        guard let item = toDoItems?[indexPath.row] else { return }
+        let sortedItems = toDoItems?.sorted(byKeyPath: "date")
+        guard let item = sortedItems?[indexPath.row] else { return }
         delete(item: item)
     }
 }
@@ -189,7 +190,9 @@ extension TodoListViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         var colorForRows: UIColor?
         
-        if let item = toDoItems?[indexPath.row] {
+        let sortedItems = toDoItems?.sorted(byKeyPath: "date")
+        
+        if let item = sortedItems?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType = item.done ? .checkmark : .none
             
@@ -198,8 +201,9 @@ extension TodoListViewController {
             }
             
             let percentegeResult = CGFloat(indexPath.row) / CGFloat(toDoItems?.count ?? 0)
-            cell.backgroundColor = colorForRows?.darken(byPercentage: percentegeResult)
-            cell.textLabel?.textColor = ContrastColorOf(colorForRows!, returnFlat: true)
+            let colorForCell = colorForRows?.darken(byPercentage: percentegeResult)
+            cell.backgroundColor = colorForCell
+            cell.textLabel?.textColor = ContrastColorOf(colorForCell!, returnFlat: true)
             
         } else {
             cell.textLabel?.text = "No items added"
@@ -209,7 +213,9 @@ extension TodoListViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let item = toDoItems?[indexPath.row] {
+        let sortedItems = toDoItems?.sorted(byKeyPath: "date")
+        
+        if let item = sortedItems?[indexPath.row] {
             do {
                 try realm.write {
                     item.done = !item.done
