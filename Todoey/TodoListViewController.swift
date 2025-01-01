@@ -33,9 +33,18 @@ class TodoListViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureNavBar()
         setDelegates()
         setupAddButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNavBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        changeNavBarColor()
     }
     
     //MARK: - Methods
@@ -46,12 +55,37 @@ class TodoListViewController: SwipeTableViewController {
         todoListView.setSearchBarDelegate(self)
     }
     
+    //MARK: - Methods NavBar
+    
     private func configureNavBar() {
-        navigationItem.title = "Item"
+        navigationItem.title = selectedCategory?.name
+                
+        if let colorHex = selectedCategory?.colorRow, let uicolor = UIColor(hexString: colorHex) {
+            let contrastColor = ContrastColorOf(uicolor, returnFlat: true)
+            
+            changeNavBarColor(uicolor, tintColor: contrastColor)
+            todoListView.updateSearchBar(barTintColor: uicolor)
+            setupAddButton(tintColor: contrastColor)
+        }
     }
     
-    private func setupAddButton() {
-        let plusImage = UIImage(systemName: "plus")?.withTintColor(.white, renderingMode: .alwaysOriginal).withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
+    private func changeNavBarColor(_ backgroundColor: UIColor? = UIColor(hexString: "1D9BF6"), tintColor: UIColor = .white) {
+        // Получаем текущую конфигурацию навбара
+        let appearance = navigationController?.navigationBar.standardAppearance.copy() as? UINavigationBarAppearance ?? UINavigationBarAppearance()
+        
+        // Меняем цвет фона
+        appearance.backgroundColor = backgroundColor
+        appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: tintColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: tintColor]
+        navigationController?.navigationBar.tintColor = tintColor
+        
+        // Применяем новую конфигурацию
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    private func setupAddButton(tintColor: UIColor = .white) {
+        let plusImage = UIImage(systemName: "plus")?.withTintColor(tintColor, renderingMode: .alwaysOriginal).withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: plusImage, style: .plain, target: self, action: #selector(addButtonTapped))
     }
     

@@ -17,6 +17,7 @@ class TodoListView: UIView {
         searchB.translatesAutoresizingMaskIntoConstraints = false
         searchB.placeholder = "Search..."
         searchB.backgroundColor = .white
+        searchB.searchTextField.backgroundColor = .systemBackground
         searchB.autocorrectionType = .no
         searchB.returnKeyType = .search
         searchB.autocapitalizationType = .sentences
@@ -79,4 +80,7 @@ class TodoListView: UIView {
     func reloadTableView() {
         tableView.reloadData()
     }
+    
+    func updateSearchBar(barTintColor: UIColor?) {
+        searchBar.barTintColor = barTintColor    }
 }

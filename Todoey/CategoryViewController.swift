@@ -117,10 +117,13 @@ extension CategoryViewController {
         
         //Проверяем есть ли цвет в старой базе, если нет присваиваем рандом и сохраняем в базу
         if let color = item?.colorRow, !color.isEmpty {
-            cell.backgroundColor = UIColor(hexString: color)
+            let uicolor = UIColor(hexString: color)
+            cell.backgroundColor = uicolor
+            cell.textLabel?.textColor = ContrastColorOf(uicolor!, returnFlat: true)
         } else {
             let hexColor = UIColor.randomFlat()
             cell.backgroundColor = UIColor.randomFlat()
+            cell.textLabel?.textColor = ContrastColorOf(hexColor, returnFlat: true)
             
             do {
                 try realm.write {

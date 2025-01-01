@@ -24,25 +24,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func configureNavBar() {
         
-        let titleTextAttributes: [NSAttributedString.Key : Any] = [
+        let titleTextAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
             .font: UIFont.systemFont(ofSize: 25, weight: .medium)
         ]
         
-        let backButtonAttributes: [NSAttributedString.Key : Any] = [
+        let backButtonAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.white,
             .font: UIFont.systemFont(ofSize: 20, weight: .medium)
         ]
         
+        let largeTitleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.white
+        ]
+        
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .blue
+        appearance.backgroundColor = UIColor(hexString: "1D9BF6")
         appearance.titleTextAttributes = titleTextAttributes
         appearance.backButtonAppearance.normal.titleTextAttributes = backButtonAttributes
+        appearance.largeTitleTextAttributes = largeTitleAttributes
         
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().prefersLargeTitles = true
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
