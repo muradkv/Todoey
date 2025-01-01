@@ -69,20 +69,22 @@ class TodoListViewController: SwipeTableViewController {
         }
     }
     
-    private func changeNavBarColor(_ backgroundColor: UIColor? = UIColor(hexString: "1D9BF6"), tintColor: UIColor = .white) {
-        // Получаем текущую конфигурацию навбара
-        let appearance = navigationController?.navigationBar.standardAppearance.copy() as? UINavigationBarAppearance ?? UINavigationBarAppearance()
-        
-        // Меняем цвет фона
-        appearance.backgroundColor = backgroundColor
-        appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: tintColor]
-        appearance.largeTitleTextAttributes = [.foregroundColor: tintColor]
-        navigationController?.navigationBar.tintColor = tintColor
-        
-        // Применяем новую конфигурацию
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    }
+    private func changeNavBarColor(
+        _ backgroundColor: UIColor = Constants.NavigationBarColors.backgroundColor,
+        tintColor: UIColor = Constants.NavigationBarColors.tintColor) {
+            // Получаем текущую конфигурацию навбара
+            let appearance = navigationController?.navigationBar.standardAppearance.copy() as? UINavigationBarAppearance ?? UINavigationBarAppearance()
+            
+            // Меняем цвет фона
+            appearance.backgroundColor = backgroundColor
+            appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: tintColor]
+            appearance.largeTitleTextAttributes = [.foregroundColor: tintColor]
+            navigationController?.navigationBar.tintColor = tintColor
+            
+            // Применяем новую конфигурацию
+            navigationController?.navigationBar.standardAppearance = appearance
+            navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        }
     
     private func setupAddButton(tintColor: UIColor = .white) {
         let plusImage = UIImage(systemName: "plus")?.withTintColor(tintColor, renderingMode: .alwaysOriginal).withConfiguration(UIImage.SymbolConfiguration(pointSize: 20, weight: .medium))

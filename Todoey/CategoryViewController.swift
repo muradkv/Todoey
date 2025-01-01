@@ -40,7 +40,7 @@ class CategoryViewController: SwipeTableViewController {
     }
     
     private func configureNavBar() {
-        navigationItem.title = "Todoey"
+        navigationItem.title = Constants.NavigationTitles.mainTitle
     }
     
     private func setupAddButton() {

@@ -40,12 +40,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(hexString: "1D9BF6")
+        appearance.backgroundColor = Constants.NavigationBarColors.backgroundColor
         appearance.titleTextAttributes = titleTextAttributes
         appearance.backButtonAppearance.normal.titleTextAttributes = backButtonAttributes
         appearance.largeTitleTextAttributes = largeTitleAttributes
         
-        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().tintColor = Constants.NavigationBarColors.tintColor
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
         UINavigationBar.appearance().prefersLargeTitles = true

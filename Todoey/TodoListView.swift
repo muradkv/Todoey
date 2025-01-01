@@ -29,7 +29,7 @@ class TodoListView: UIView {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: "SwipeCell")
+        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: Constants.CellIdentifiers.swipeCell)
         tableView.rowHeight = 80
         return tableView
     }()

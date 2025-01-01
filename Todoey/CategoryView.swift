@@ -14,7 +14,7 @@ class CategoryView: UIView {
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: "SwipeCell")
+        tableView.register(SwipeTableViewCell.self, forCellReuseIdentifier: Constants.CellIdentifiers.swipeCell)
         tableView.rowHeight = 80
         tableView.separatorStyle = .none
         return tableView
